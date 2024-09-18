@@ -1,5 +1,5 @@
 N = int(input())
-group_word = N
+W = N
 
 for i in range(N) :
     word = input()
@@ -7,6 +7,6 @@ for i in range(N) :
         if word[j] == word[j+1] :
             continue
         elif word[j] in word[j+1:] :
-            group_word -= 1
+            W -= 1
             break
-print(group_word)
+print(W)
