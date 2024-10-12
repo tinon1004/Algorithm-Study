@@ -1,66 +1,73 @@
 from collections import deque
 
+def bfs(si,sj):
+    flist=[]
+    q = deque()
+    visited =[[0]*N  for _ in range(N)]
+
+    q.append((si,sj))
+    visited[si][sj] =1
+    fish = 0
+
+    while q:
+        ci,cj = q.popleft()
+        if fish == visited[ci][cj]:
+            return flist,fish -1
+
+        # 조건에 따른 방향 이동
+        # 범위 내 , 미방문인지, 물고기 < 아기 상어
+        for di,dj in ((-1,0),(1,0),(0,-1),(0,1)):
+            ni,nj = ci+di, cj+dj
+            if 0<= ni <N and 0<= nj < N and visited[ni][nj] == 0 and shark_size >= board[ni][nj]:
+                q.append((ni,nj))
+                visited[ni][nj] = visited[ci][cj]+1
+                #아기상어가 먹을 수 있는 물고기인 경우 Flist에 추가
+                if shark_size > board[ni][nj] > 0:
+                    flist.append((ni,nj))
+                    fish = visited[ni][nj]
+
+
+    return flist, fish -1
+
+
+
+
+
+
 N = int(input())
-space = [list(map(int, input().split())) for _ in range(N)]
+board = [list(map(int,input().split())) for _ in range(N)]
 
-dx = [-1, 0, 1, 0]
-dy = [0, 1, 0, -1]
-
-pos = []
+#아기상어 위치 찾기
 for i in range(N):
     for j in range(N):
-        if space[i][j] == 9:
-            pos.append(i)
-            pos.append(j)
+        if board[i][j] == 9:
+            ci,cj = i,j
+            board[i][j] = 0 #아기 상어 자리 0으로 바꾸기
 
-cnt = 0
+shark_size = 2
+time = 0
+fish = 0
 
-def bfs(x, y):
-    visited = [[0] * N for _ in range(N)]
-    queue = deque([[x, y]])
-    cand = []
-
-    visited[x][y] = 1
-
-    while queue:
-        i, j = queue.popleft()
-
-        for idx in range(4):
-            ii, jj = i + dx[idx], j + dy[idx]
-
-            if 0 <= ii and ii < N and 0 <= jj and jj < N and visited[ii][jj] == 0:
-                if space[x][y] > space[ii][jj] and space[ii][jj] != 0:
-                    visited[ii][jj] = visited[i][j] + 1
-                    cand.append((visited[ii][jj] - 1, ii, jj))
-                elif space[x][y] == space[ii][jj]:
-                    visited[ii][jj] = visited[i][j] + 1
-                    queue.append([ii, jj])
-                elif space[ii][jj] == 0:
-                    visited[ii][jj] = visited[i][j] + 1
-                    queue.append([ii, jj])
-    return sorted(cand, key=lambda x: (x[0], x[1], x[2]))
-
-
-i, j = pos
-size = [2, 0]
 while True:
-    space[i][j] = size[0]
-    cand = deque(bfs(i, j))
+    flist, dist = bfs(ci,cj)
 
-    if not cand:
+    #물고기 수가 없다면 종료
+    if len(flist) == 0:
         break
 
-    #먹을 위치로 이동
-    step, xx, yy = cand.popleft()
-    cnt += step
-    size[1] += 1
+    #물고기 위치 정렬, 가장 왼쪽 상단 기준 가져오기,
+    #상어 위치 재설정, 원래 상어 위치는 0으로 바꾸기
 
-    # 먹은 개수, 시간 체크
-    if size[0] == size[1]:
-        size[0] += 1
-        size[1] = 0
+    ni, nj = min(flist)
+    board[ni][nj] = 0
+    ci,cj = ni, nj
 
-    space[i][j] = 0
-    i, j = xx, yy
+    # 이동 거리, 먹은 물고기 더하기 더하기
+    time += dist
+    fish += 1
 
-print(cnt)
+    # 먹은 물고기 수와 상어 사이즈가 같으면, 상어 +1, 물고기 초기화
+    if fish == shark_size:
+        shark_size +=1
+        fish = 0
+print(time)
