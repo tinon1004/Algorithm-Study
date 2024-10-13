@@ -1,23 +1,22 @@
-#최소 시간에는 bfs 활용
-
 from collections import deque
+n,m = map(int,input().split())
+road= [0]*(10**5+1)
 
-n, k = map(int, input().split())
 
-MAX = 10 ** 5
-visited = [0] * (MAX + 1)
 
-# s = 시작위치
 def bfs(n):
-    q = deque()
-    q.append(n)
+    q=deque([n])
+    visited = [0] * (10 ** 5 + 1)
 
     while q:
-        cur = q.popleft() #n,i
-        if cur == k:
-            return visited[k]
-        for i in (cur+1, cur-1, cur * 2):
-            if 0 <= i <= MAX and not visited[i]:
-              visited[i] = visited[cur] + 1
-              q.append(i)
+        curr = q.popleft()
+
+        if curr == m:
+            return visited[m]
+        for npos in (curr+1, curr-1, 2* curr):
+            if 0<=npos<=(10**5) and visited[npos] == 0:
+                q.append(npos)
+                #연속된 이동이 아니기 때문에 단순히 +1을 하면 안 됨
+                visited[npos] = visited[curr]+1
+
 print(bfs(n))
