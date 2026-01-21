@@ -1,17 +1,19 @@
 class Solution {
     public int solution(int[] num_list) {
-        int sum = 0;
-        int pro = 1;
+        int answer = 0;
         
-        for(int i : num_list){
-            sum += i;
-            pro *= i;
+        int num1 = 1;
+        int num2 = 0;
+        
+        for (int i=0; i<num_list.length; i++) {
+            num1 *= num_list[i];
+            num2 += num_list[i];
         }
         
-        if ( pro < sum * sum){
+        if (num1 < num2*num2) {
             return 1;
+        } else {
+            return 0;
         }
-        else return 0;
-        
     }
 }
