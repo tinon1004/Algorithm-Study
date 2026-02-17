@@ -9,8 +9,8 @@ class Solution {
         return answer;
     }
     
-    public void dfs (int[] numbers, int target, int idx, int sum) {
-        // 모든 숫자를 다 사용했을 때
+    public void dfs(int[] numbers, int target, int idx, int sum) {
+        
         if (idx == numbers.length) {
             if (sum == target) {
                 answer++;
@@ -20,6 +20,5 @@ class Solution {
         
         dfs(numbers, target, idx + 1, sum + numbers[idx]);
         dfs(numbers, target, idx + 1, sum - numbers[idx]);
-        
     }
 }
