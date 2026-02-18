@@ -1,4 +1,5 @@
-SELECT floor(price/10000)*10000 as price_group, count(product_id) as products
-from product
-group by price_group
-order by price_group;
+SELECT FLOOR(PRICE / 10000) * 10000 as PRICE_GROUP,
+       COUNT(PRODUCT_ID) AS PRODUCTS
+  FROM PRODUCT
+ GROUP BY PRICE_GROUP
+ ORDER BY PRICE_GROUP
