@@ -12,16 +12,18 @@ class Solution {
         
         while (pq.peek() < K) {
             
+            // pq에서는 1개가 남았을 때 poll 해버리면 오류가 남
             if (pq.size() < 2) {
                 return -1;
             }
             
-            int a = pq.poll();
-            int b = pq.poll();
+            int num1 = pq.poll();
+            int num2 = pq.poll();
             
-            int c = a + (b * 2);
+            int num3 = num1 + (num2 * 2);
             
-            pq.add(c);
+            pq.add(num3);
+            
             answer++;
         }
         
