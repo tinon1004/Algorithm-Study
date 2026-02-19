@@ -11,8 +11,8 @@ class Solution {
         }
         
         for (String key : map.keySet()) {
-            answer *= map.get(key) + 1;
-        }
+            answer *= map.get(key) + 1;     
+        }   
         
         answer -= 1;
         
