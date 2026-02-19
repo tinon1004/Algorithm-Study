@@ -7,13 +7,11 @@ class Solution {
         int answer = 0;
         visited = new boolean[n];
         
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < visited.length; i++) {
             if(!visited[i]) {
                 dfs(i, computers);
                 answer++;
             }
-                            
-
         }
         
         return answer;
@@ -24,7 +22,7 @@ class Solution {
         visited[n] = true;
         
         for (int i = 0; i < computers.length; i++) {
-            if(!visited[i] && computers[n][i] == 1) {
+            if(computers[n][i] == 1 && !visited[i]) {
                 dfs(i, computers);
             }
         }
