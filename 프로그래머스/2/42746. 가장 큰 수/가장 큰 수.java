@@ -3,16 +3,16 @@ import java.util.*;
 class Solution {
     public String solution(int[] numbers) {
         String answer = "";
-        String[] str = new String[numbers.length];
         
+        String str[] = new String[numbers.length];
         
+        // 숫자를 String으로 변환
         for (int i = 0; i < numbers.length; i++) {
             str[i] = String.valueOf(numbers[i]);
-            
         }
         
-        Arrays.sort(str, (a , b) -> (b + a).compareTo(a + b));
-        
+        Arrays.sort(str, (a, b) -> (b + a).compareTo(a + b));
+                    
         for (int i = 0; i < str.length; i++) {
             answer += str[i];
         }
