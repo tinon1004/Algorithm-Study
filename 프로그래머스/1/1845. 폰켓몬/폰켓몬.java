@@ -4,6 +4,7 @@ class Solution {
     public int solution(int[] nums) {
         int answer = 0;
         
+        // 중복제거를 위함
         HashSet<Integer> set = new HashSet<>();
         
         for (int i = 0; i < nums.length; i++) {
